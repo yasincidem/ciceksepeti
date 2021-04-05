@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CicekSepeti</string>
+    <string name="applied_filter_count">Uygulanan Filtre sayısı:\u00A0\u00A0</string>
+    <string name="product_count">Ürün sayısı:\u00A0\u00A0</string>
+    <string name="clear_filter">Temizle</string>
+    <string name="homepage">Anasayfa</string>
+    <string name="explore">Keşfet</string>
+    <string name="my_favorites">Favorilerim</string>
+    <string name="my_account">Hesabım</string>
+</resources>
