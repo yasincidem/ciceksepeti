@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,6 +43,7 @@ import com.yasincidem.ciceksepeti.datasource.model.Values
 import com.yasincidem.ciceksepeti.ui.product.ProductListAdapter
 import com.yasincidem.ciceksepeti.ui.product.ProductViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -123,6 +125,7 @@ class MainActivity : AppCompatActivity() {
 fun FilterList(viewModel: ProductViewModel) {
 
     val filterState by viewModel.filteredProductList.observeAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     when (filterState) {
         is ResultOf.Success -> {
@@ -235,7 +238,11 @@ fun FilterList(viewModel: ProductViewModel) {
                                     isSelected = filter.selected == true,
                                     filterValue = filter,
                                     onSelectedCategoryChanged = {
-                                        viewModel.updateFilteredValues(it)
+                                        viewModel.updateFilteredValues(it).apply {
+                                            coroutineScope.launch {
+                                                scrollState.animateScrollToItem(0)
+                                            }
+                                        }
                                     }
                                 )
                             }
